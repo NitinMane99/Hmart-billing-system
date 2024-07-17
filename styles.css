@@ -1,12 +1,11 @@
-/* styles.css */
+/* Global Styles */
 
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  background-color: #f0f0f0;
 }
- 
-
 
 header {
   background-color: #333;
@@ -61,8 +60,6 @@ button {
   border-radius: 4px;
 }
 
-
-
 button:hover {
   background-color: #45a049;
 }
@@ -80,10 +77,6 @@ input[type="email"] {
 
 input[type="number"] {
   width: 100px;
-}
-
-.hidden {
-  display: none;
 }
 
 .quantity-buttons {
@@ -116,76 +109,54 @@ input[type="number"] {
     max-width: none; /* No maximum width on smaller screens */
     margin-bottom: 1rem;
   }
+
+  /* Adjustments for input fields on smaller screens */
+  input[type="text"],
+  input[type="number"],
+  input[type="tel"],
+  input[type="email"] {
+    width: 100%;
+    padding: 0.4rem;
+  }
+
+  /* Positioning checkout button at the bottom right */
+  #checkout-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000; /* Ensure it's above other content */
+    width: calc(100% - 40px); /* Adjusted width for smaller screens */
+    max-width: 200px; /* Limit maximum width for larger screens */
+  }
 }
 
-/* footer section */
+/* Footer Styles */
+
 footer {
-  background-color: #f8f8f8;
-  padding: 20px;
+  background-color: #333;
+  color: #fff;
   text-align: center;
-  border-top: 1px solid #e7e7e7;
- 
-  width: 100%;
+  padding: 1rem 0;
+  position: fixed;
   bottom: 0;
-  left: 0;
+  width: 100%;
 }
+
 footer p {
   margin: 0;
   color: #666;
 }
-footer .footer-links {
+
+.footer-links {
   margin-top: 10px;
 }
-footer .footer-links a {
+
+.footer-links a {
   color: #4CAF50;
   text-decoration: none;
   margin: 0 10px;
 }
-footer .footer-links a:hover {
+
+.footer-links a:hover {
   text-decoration: underline;
 }
-
-/* Positioning checkout button at the top right */
-#checkout-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  border-radius: 5px;
-}
-#checkout-btn:hover {
-  background-color: #45a049;
-}
-
-/* Relative positioning for the cart section */
-#cart-section {
-  position: relative;
-}
-
-/* General styles for the mobile input field */
-/* General styles for customer details input fields */
-/* #customer-name,
-#customer-email,
-#customer-mobile {
-  width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-}
-
-/* Media query for mobile devices */
-/* @media only screen and (max-width: 600px) {
-  #customer-name,
-  #customer-email,
-  #customer-mobile {
-    font-size: 14px;
-    padding: 8px;
-  }
-} */ */
