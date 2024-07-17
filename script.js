@@ -121,12 +121,7 @@ function updateCart() {
   cart.forEach(item => {
     const li = document.createElement('li');
     li.innerHTML = `
-      ${item.name} - ₹${item.price.toFixed(2)} x 
-      <div class="quantity-buttons">
-        <button onclick="decreaseCartItemQuantity(${item.id})">-</button>
-        <span id="cart-quantity-${item.id}">${item.quantity}</span>
-        <button onclick="increaseCartItemQuantity(${item.id})">+</button>
-      </div>
+      ${item.name} - ₹${item.price.toFixed(2)} x ${item.quantity}
       <button onclick="removeFromCart(${item.id})">Remove</button>
     `;
     cartList.appendChild(li);
@@ -134,38 +129,6 @@ function updateCart() {
   });
 
   document.getElementById('total-amount').textContent = `Total: ₹${totalAmount.toFixed(2)}`;
-}
-
-// Function to decrease quantity of product
-function decreaseQuantity(productId) {
-  const product = products.find(item => item.id === productId);
-  if (product.quantity && product.quantity > 1) {
-    product.quantity--;
-    document.getElementById(`quantity-${productId}`).textContent = product.quantity;
-  }
-}
-
-// Function to increase quantity of product
-function increaseQuantity(productId) {
-  const product = products.find(item => item.id === productId);
-  product.quantity = (product.quantity || 1) + 1;
-  document.getElementById(`quantity-${productId}`).textContent = product.quantity;
-}
-
-// Function to decrease quantity of cart item
-function decreaseCartItemQuantity(productId) {
-  const cartItem = cart.find(item => item.id === productId);
-  if (cartItem.quantity > 1) {
-    cartItem.quantity--;
-    document.getElementById(`cart-quantity-${productId}`).textContent = cartItem.quantity;
-  }
-}
-
-// Function to increase quantity of cart item
-function increaseCartItemQuantity(productId) {
-  const cartItem = cart.find(item => item.id === productId);
-  cartItem.quantity++;
-  document.getElementById(`cart-quantity-${productId}`).textContent = cartItem.quantity;
 }
 
 // Function to remove item from cart
@@ -207,6 +170,33 @@ function getTotalAmount() {
     totalAmount += item.price * item.quantity;
   });
   return totalAmount;
+}
+
+// Function to decrease quantity of product in both product list and cart
+function decreaseQuantity(productId) {
+  const product = products.find(item => item.id === productId);
+  if (product.quantity && product.quantity > 1) {
+    product.quantity--;
+    updateCartQuantity(productId, product.quantity); // Update cart quantity
+    document.getElementById(`quantity-${productId}`).textContent = product.quantity;
+  }
+}
+
+// Function to increase quantity of product in both product list and cart
+function increaseQuantity(productId) {
+  const product = products.find(item => item.id === productId);
+  product.quantity = (product.quantity || 1) + 1;
+  updateCartQuantity(productId, product.quantity); // Update cart quantity
+  document.getElementById(`quantity-${productId}`).textContent = product.quantity;
+}
+
+// Function to update quantity in cart
+function updateCartQuantity(productId, quantity) {
+  const cartProduct = cart.find(item => item.id === productId);
+  if (cartProduct) {
+    cartProduct.quantity = quantity;
+    updateCart(); // Update cart display after quantity change
+  }
 }
 
 // Initial display of products (without showing initialProducts by default)
