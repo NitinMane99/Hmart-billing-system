@@ -1,5 +1,4 @@
 document.getElementById('add-product-btn').addEventListener('click', addProduct);
-document.getElementById('search-btn').addEventListener('click', searchProducts);
 document.getElementById('add-all-to-cart').addEventListener('click', addAllToCart);
 document.getElementById('select-all-checkbox').addEventListener('change', selectAllProducts);
 document.getElementById('checkout-btn').addEventListener('click', showCheckout);
@@ -38,20 +37,6 @@ function addProduct() {
     document.getElementById('product-quantity').value = '1';
   } else {
     alert('Please enter valid product details.');
-  }
-}
-
-// Function to search products based on input
-function searchProducts() {
-  const searchValue = document.getElementById('product-search').value.trim().toLowerCase();
-  const filteredProducts = products.filter(product =>
-    product.name.toLowerCase().includes(searchValue)
-  );
-  
-  if (filteredProducts.length > 0) {
-    displayProducts(filteredProducts);
-  } else {
-    displayProducts([]); // Display empty list when no search results
   }
 }
 
