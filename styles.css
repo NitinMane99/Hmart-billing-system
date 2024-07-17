@@ -47,7 +47,7 @@ li {
 }
 
 button {
-  background-color: #4caf50;
+  background-color: #4c8baf;
   color: white;
   border: none;
   padding: 0.5rem 1rem;
@@ -58,6 +58,9 @@ button {
   margin-top: 0.5rem;
   cursor: pointer;
   border-radius: 4px;
+}
+.btn-success{
+  background-color: rgb(82, 197, 92);
 }
 
 button:hover {
