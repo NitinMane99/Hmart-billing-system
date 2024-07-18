@@ -21,16 +21,25 @@ function addProduct() {
   const productQuantity = parseInt(document.getElementById('product-quantity').value.trim(), 10); // Specify base 10 for parseInt
 
   if (productName && !isNaN(productPrice) && productPrice > 0 && productQuantity > 0) {
-    // Add the new product
-    const newProduct = {
-      id: products.length + 1,
-      name: productName,
-      price: productPrice,
-      quantity: productQuantity
-    };
-    products.push(newProduct);
-    displayProducts(); // Display all products after adding a new one
+    // Check if the product already exists
+    const existingProductIndex = findProductIndex(productName, products);
     
+    if (existingProductIndex !== -1) {
+      // Product already exists, update price and quantity
+      products[existingProductIndex].price = productPrice;
+      products[existingProductIndex].quantity += productQuantity;
+    } else {
+      // Product doesn't exist, add the new product
+      const newProduct = {
+        id: products.length + 1,
+        name: productName,
+        price: productPrice,
+        quantity: productQuantity
+      };
+      products.push(newProduct);
+    }
+
+    displayProducts(); // Display all products after adding or updating
     // Clear input fields
     document.getElementById('product-name').value = '';
     document.getElementById('product-price').value = '';
@@ -86,16 +95,7 @@ function addAllToCart() {
   checkboxes.forEach(checkbox => {
     if (checkbox.checked) {
       const productId = parseInt(checkbox.getAttribute('data-id'));
-      const product = products.find(item => item.id === productId);
-      
-      if (product) {
-        const existingProduct = cart.find(item => item.id === productId);
-        if (existingProduct) {
-          existingProduct.quantity += product.quantity; // Increase quantity if product already exists in cart
-        } else {
-          cart.push({ ...product }); // Add new product to cart with the current quantity
-        }
-      }
+      addToCart(productId);
     }
   });
 
@@ -107,10 +107,12 @@ function addToCart(productId) {
   const product = products.find(item => item.id === productId);
 
   if (product) {
-    const existingProduct = cart.find(item => item.id === productId);
-    if (existingProduct) {
-      existingProduct.quantity += product.quantity; // Increase quantity if product already exists in cart
+    const existingProductIndex = findProductIndex(product.name, cart);
+    if (existingProductIndex !== -1) {
+      // Product already exists in cart, update quantity
+      cart[existingProductIndex].quantity += product.quantity;
     } else {
+      // Product doesn't exist in cart, add it
       cart.push({ ...product }); // Add new product to cart with the current quantity
     }
     updateCart(); // Update the cart display
@@ -206,6 +208,11 @@ function updateCartQuantity(productId, quantity) {
     cartProduct.quantity = quantity;
     updateCart(); // Update cart display after quantity change
   }
+}
+
+// Function to find index of product by name in an array
+function findProductIndex(productName, array) {
+  return array.findIndex(item => item.name === productName);
 }
 
 // Initial display of products (without showing initialProducts by default)
