@@ -57,12 +57,19 @@ function displayProducts(productsToDisplay = products) {
         <button onclick="increaseQuantity(${product.id})">+</button>
       </div>
       <button onclick="addToCart(${product.id})">Add to Cart</button>
+      <button onclick="removeProduct(${product.id})">Remove</button>
     `;
     productList.appendChild(li);
   });
 
   // Show the product list
   document.getElementById('product-list-section').classList.remove('hidden');
+}
+
+// Function to remove product from the product list
+function removeProduct(productId) {
+  products = products.filter(item => item.id !== productId);
+  displayProducts(); // Update the display after removing the product
 }
 
 // Function to select all products
@@ -84,9 +91,9 @@ function addAllToCart() {
       if (product) {
         const existingProduct = cart.find(item => item.id === productId);
         if (existingProduct) {
-          existingProduct.quantity++; // Increase quantity if product already exists in cart
+          existingProduct.quantity += product.quantity; // Increase quantity if product already exists in cart
         } else {
-          cart.push({ ...product, quantity: 1 }); // Add new product to cart with initial quantity 1
+          cart.push({ ...product }); // Add new product to cart with the current quantity
         }
       }
     }
@@ -102,9 +109,9 @@ function addToCart(productId) {
   if (product) {
     const existingProduct = cart.find(item => item.id === productId);
     if (existingProduct) {
-      existingProduct.quantity++; // Increase quantity if product already exists in cart
+      existingProduct.quantity += product.quantity; // Increase quantity if product already exists in cart
     } else {
-      cart.push({ ...product, quantity: 1 }); // Add new product to cart with initial quantity 1
+      cart.push({ ...product }); // Add new product to cart with the current quantity
     }
     updateCart(); // Update the cart display
   } else {
@@ -147,12 +154,14 @@ function confirmOrder() {
   const name = document.getElementById('customer-name').value.trim();
   const mobile = document.getElementById('customer-mobile').value.trim();
   const email = document.getElementById('customer-email').value.trim();
+  const paymentMode = document.getElementById('payment-mode').value;
 
   if (name && cart.length > 0) {
     // Store order details in sessionStorage (you can use localStorage or pass via URL as well)
     sessionStorage.setItem('customerName', name);
     sessionStorage.setItem('customerMobile', mobile);
     sessionStorage.setItem('customerEmail', email);
+    sessionStorage.setItem('paymentMode', paymentMode);
     sessionStorage.setItem('cartItems', JSON.stringify(cart));
     sessionStorage.setItem('totalAmount', getTotalAmount().toFixed(2));
 

@@ -96,10 +96,18 @@
           <input type="email" id="customer-email" class="form-control" placeholder="Customer Email (optional)">
         </div>
         <div class="col-12">
+          <label for="payment-mode" class="form-label">Payment Mode</label>
+          <select id="payment-mode" class="form-select">
+            <option value="cash">Cash</option>
+            <option value="online">Online</option>
+          </select>
+        </div>
+        <div class="col-12">
           <button id="confirm-btn" class="btn btn-success btn-lg btn-block">Confirm Order</button>
         </div>
       </div>
     </section>
+    
     <section id="bill-container" class="hidden"></section>
   </main>
   <footer class="bg-light text-center py-4 mt-5">

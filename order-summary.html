@@ -132,6 +132,10 @@
       <h2 class="text-xl font-semibold mb-2">Total Amount</h2>
       <p id="total-amount"></p>
     </div>
+    <div class="order-details payment-method mb-4">
+      <h2 class="text-xl font-semibold mb-2">Payment Method</h2>
+      <p id="payment-method"></p>
+    </div>
     <div class="footer mb-4">
       <p class="text-lg">Thank you and visit again...!</p>
     </div>
@@ -147,16 +151,18 @@
   <script>
     // Retrieve order details from sessionStorage
     const customerName = sessionStorage.getItem('customerName');
-    const customerMobile = sessionStorage.getItem('customerMobile'); // Added to retrieve mobile number
+    const customerMobile = sessionStorage.getItem('customerMobile');
     const customerEmail = sessionStorage.getItem('customerEmail');
     const cartItems = JSON.parse(sessionStorage.getItem('cartItems'));
     const totalAmount = sessionStorage.getItem('totalAmount');
+    const paymentMode = sessionStorage.getItem('paymentMode');
 
     // Update DOM with retrieved values
     document.getElementById('customer-name').textContent = customerName;
-    document.getElementById('customer-mobile').textContent = customerMobile; // Display mobile number
+    document.getElementById('customer-mobile').textContent = customerMobile;
     document.getElementById('customer-email').textContent = customerEmail;
     document.getElementById('total-amount').textContent = `Total: ₹${totalAmount}`;
+    document.getElementById('payment-method').textContent = `Payment Method: ${paymentMode}`;
 
     // Display products in the order table
     const productTables = document.getElementById('product-tables');
