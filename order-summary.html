@@ -133,7 +133,7 @@
       <p id="total-amount"></p>
     </div>
     <div class="order-details payment-method mb-4">
-      <h2 class="text-xl font-semibold mb-2">Payment Method</h2>
+      <!-- <h2 class="text-xl font-semibold mb-2">Payment Mode</h2> -->
       <p id="payment-method"></p>
     </div>
     <div class="footer mb-4">
@@ -162,7 +162,7 @@
     document.getElementById('customer-mobile').textContent = customerMobile;
     document.getElementById('customer-email').textContent = customerEmail;
     document.getElementById('total-amount').textContent = `Total: ₹${totalAmount}`;
-    document.getElementById('payment-method').textContent = `Payment Method: ${paymentMode}`;
+    document.getElementById('payment-method').textContent = `Payment Mode: ${paymentMode}`;
 
     // Display products in the order table
     const productTables = document.getElementById('product-tables');
