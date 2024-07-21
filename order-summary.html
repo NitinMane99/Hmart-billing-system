@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,69 +13,70 @@
       padding: 0;
       box-sizing: border-box;
       font-family: Arial, sans-serif;
-      background-color: #edf2f7;
+      background-color: #f9f9f9;
     }
 
     .container {
-      max-width: 800px;
+      max-width: 100%;
       margin: 0 auto;
       background-color: #fff;
-      padding: 20px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      margin-top: 0;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     }
 
     .store-info {
-      border-bottom: 1px solid #ccc;
-      padding-bottom: 10px;
-      margin-bottom: 20px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 8px;
+      margin-bottom: 8px;
       text-align: center;
     }
 
     .order-details {
-      margin-bottom: 20px;
+      margin-bottom: 8px;
     }
 
     .order-details h2 {
-      border-bottom: 1px solid #ccc;
-      padding-bottom: 10px;
-      margin-bottom: 10px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 6px;
+      margin-bottom: 6px;
+      font-size: 1.1em;
+      font-weight: bold;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-bottom: 20px;
+      margin-bottom: 8px;
     }
 
     th,
     td {
-      border: 1px solid #ccc;
-      padding: 8px;
+      border: 1px solid #ddd;
+      padding: 4px;
       text-align: left;
-      font-size: 0.9em;
+      font-size: 0.8em;
     }
 
     th {
-      background-color: #f2f2f2;
+      background-color: #f5f5f5;
     }
 
     .total-amount {
       font-weight: bold;
-      font-size: 1.2em;
+      font-size: 1em;
       text-align: right;
     }
 
     .footer {
-      margin-top: 20px;
+      margin-top: 8px;
       text-align: center;
-      font-size: 0.9em;
+      font-size: 0.8em;
     }
 
     .btn {
-      padding: 10px 20px;
+      padding: 8px 16px;
       background-color: #4CAF50;
       color: white;
       text-align: center;
@@ -85,142 +85,151 @@
       border-radius: 4px;
       cursor: pointer;
       display: inline-block;
-      font-size: 0.9em;
+      font-size: 0.8em;
     }
 
     .btn:hover {
       background-color: #45a049;
     }
 
-    /* Responsive CSS */
-    @media only screen and (max-width: 600px) {
-      .container {
-        padding: 10px;
-      }
-
-      h1 {
-        font-size: 1.5em;
-      }
-
-      table {
-        font-size: 0.8em;
-      }
+    .qr-code-container {
+      text-align: center;
+      margin: 10px 0;
     }
 
-    .page-break {
-      page-break-before: always;
+    #qr-code {
+      width: 100px; /* Adjusted size for compact layout */
+      height: 100px; /* Adjusted size for compact layout */
+      margin: 0 auto;
     }
   </style>
 </head>
-
 <body>
-  <div class="container mx-auto bg-white p-4 shadow-lg rounded-lg mt-0" id="pdf-content">
-    <div class="store-info pb-4 border-b border-gray-300 mb-4">
-      <h2 class="text-2xl font-bold mb-2">H Mart</h2>
+  <div class="container" id="pdf-content">
+    <div class="store-info">
+      <h2 class="text-xl font-bold mb-2">H Mart</h2>
       <p>GST Number: 123456789012</p>
       <p>Address: HMart, Ganpati chowk road, Pune, Pincode - 411014</p>
     </div>
-    <h1 class="text-3xl font-bold text-center mb-4">Order Summary</h1>
-    <div class="order-details mb-4">
-      <h2 class="text-xl font-semibold mb-2">Customer Details</h2>
+    <h1 class="text-2xl font-bold text-center mb-4">Order Summary</h1>
+    <div class="order-details">
+      <h2 class="text-lg font-semibold mb-2">Customer Details</h2>
       <p><strong>Name:</strong> <span id="customer-name"></span></p>
       <p><strong>Mobile:</strong> <span id="customer-mobile"></span></p>
       <p><strong>Email:</strong> <span id="customer-email"></span></p>
     </div>
     <div id="product-tables"></div>
-    <div class="order-details total-amount mb-4">
-      <h2 class="text-xl font-semibold mb-2">Total Amount</h2>
+    <div class="order-details total-amount">
+      <h2 class="text-lg font-semibold mb-2">Total Amount</h2>
       <p id="total-amount"></p>
     </div>
     <div class="order-details payment-method mb-4">
-      <!-- <h2 class="text-xl font-semibold mb-2">Payment Mode</h2> -->
+      <h2 class="text-lg font-semibold mb-2"></h2>
       <p id="payment-method"></p>
     </div>
-    <div class="footer mb-4">
-      <p class="text-lg">Thank you and visit again...!</p>
+    <div class="order-details qr-code-container">
+      <h2 class="text-lg font-semibold mb-2">QR Code</h2>
+      <canvas id="qr-code"></canvas>
+    </div>
+    <div class="footer">
+      <p class="text-sm">Thank you and visit again...!</p>
     </div>
   </div>
-  <div class="flex justify-center">
-    <button class="btn mt-4" id="generate-pdf-btn">Download PDF</button>
+  <div class="flex justify-center mt-4">
+    <button class="btn" id="generate-pdf-btn">Download PDF</button>
   </div>
 
   <!-- External Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
 
   <script>
-    // Retrieve order details from sessionStorage
-    const customerName = sessionStorage.getItem('customerName');
-    const customerMobile = sessionStorage.getItem('customerMobile');
-    const customerEmail = sessionStorage.getItem('customerEmail');
-    const cartItems = JSON.parse(sessionStorage.getItem('cartItems'));
-    const totalAmount = sessionStorage.getItem('totalAmount');
-    const paymentMode = sessionStorage.getItem('paymentMode');
+    document.addEventListener('DOMContentLoaded', function () {
+      // Retrieve order details from sessionStorage
+      const customerName = sessionStorage.getItem('customerName') || 'Customer Name';
+      const customerMobile = sessionStorage.getItem('customerMobile') || '8830713971';
+      const customerEmail = sessionStorage.getItem('customerEmail') || 'customer@example.com';
+      const cartItems = JSON.parse(sessionStorage.getItem('cartItems')) || [];
+      const totalAmount = sessionStorage.getItem('totalAmount') || '0.00';
+      const paymentMode = sessionStorage.getItem('paymentMode') || 'UPI';
 
-    // Update DOM with retrieved values
-    document.getElementById('customer-name').textContent = customerName;
-    document.getElementById('customer-mobile').textContent = customerMobile;
-    document.getElementById('customer-email').textContent = customerEmail;
-    document.getElementById('total-amount').textContent = `Total: ₹${totalAmount}`;
-    document.getElementById('payment-method').textContent = `Payment Mode: ${paymentMode}`;
+      // Update DOM with retrieved values
+      document.getElementById('customer-name').textContent = customerName;
+      document.getElementById('customer-mobile').textContent = customerMobile;
+      document.getElementById('customer-email').textContent = customerEmail;
+      document.getElementById('total-amount').textContent = `Total: ₹${totalAmount}`;
+      document.getElementById('payment-method').textContent = `Payment Mode: ${paymentMode}`;
 
-    // Display products in the order table
-    const productTables = document.getElementById('product-tables');
+      // Display products in the order table
+      const productTables = document.getElementById('product-tables');
 
-    const chunkArray = (arr, chunkSize) => {
-      let chunks = [];
-      for (let i = 0; i < arr.length; i += chunkSize) {
-        chunks.push(arr.slice(i, i + chunkSize));
-      }
-      return chunks;
-    };
-
-    const productChunks = chunkArray(cartItems, 15);
-
-    productChunks.forEach((chunk, chunkIndex) => {
-      const table = document.createElement('table');
-      table.className = "w-full mb-4";
-      if (chunkIndex > 0) table.classList.add('page-break');
-      const thead = document.createElement('thead');
-      thead.innerHTML = `
-        <tr>
-          <th class="border border-gray-300 px-4 py-2">#</th>
-          <th class="border border-gray-300 px-4 py-2">Product Name</th>
-          <th class="border border-gray-300 px-4 py-2">Price</th>
-          <th class="border border-gray-300 px-4 py-2">Quantity/Kg/Ltr.</th>
-          <th class="border border-gray-300 px-4 py-2">Total</th>
-        </tr>
-      `;
-      table.appendChild(thead);
-      const tbody = document.createElement('tbody');
-      chunk.forEach((item, index) => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td class="border border-gray-300 px-4 py-2">${chunkIndex * 15 + index + 1}</td>
-          <td class="border border-gray-300 px-4 py-2">${item.name}</td>
-          <td class="border border-gray-300 px-4 py-2">₹${item.price.toFixed(2)}</td>
-          <td class="border border-gray-300 px-4 py-2">${item.quantity}</td>
-          <td class="border border-gray-300 px-4 py-2">₹${(item.price * item.quantity).toFixed(2)}</td>
-        `;
-        tbody.appendChild(row);
-      });
-      table.appendChild(tbody);
-      productTables.appendChild(table);
-    });
-
-    // Generate PDF function
-    document.getElementById('generate-pdf-btn').addEventListener('click', () => {
-      const element = document.getElementById('pdf-content');
-      const opt = {
-        margin: 0.5,
-        filename: `${customerName}_order-summary.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+      const chunkArray = (arr, chunkSize) => {
+        let chunks = [];
+        for (let i = 0; i < arr.length; i += chunkSize) {
+          chunks.push(arr.slice(i, i + chunkSize));
+        }
+        return chunks;
       };
-      html2pdf().from(element).set(opt).save();
+
+      const productChunks = chunkArray(cartItems, 15);
+
+      productChunks.forEach((chunk, chunkIndex) => {
+        const table = document.createElement('table');
+        table.className = "mb-4";
+        if (chunkIndex > 0) table.classList.add('page-break');
+        const thead = document.createElement('thead');
+        thead.innerHTML = `
+          <tr>
+            <th class="border px-1 py-1">#</th>
+            <th class="border px-1 py-1">Product Name</th>
+            <th class="border px-1 py-1">Price</th>
+            <th class="border px-1 py-1">Quantity</th>
+            <th class="border px-1 py-1">Total</th>
+          </tr>
+        `;
+        table.appendChild(thead);
+        const tbody = document.createElement('tbody');
+        chunk.forEach((item, index) => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td class="border px-1 py-1">${chunkIndex * 15 + index + 1}</td>
+            <td class="border px-1 py-1">${item.name}</td>
+            <td class="border px-1 py-1">₹${item.price.toFixed(2)}</td>
+            <td class="border px-1 py-1">${item.quantity}</td>
+            <td class="border px-1 py-1">₹${(item.price * item.quantity).toFixed(2)}</td>
+          `;
+          tbody.appendChild(row);
+        });
+        table.appendChild(tbody);
+        productTables.appendChild(table);
+      });
+
+      // Generate QR code for payment
+      const qrCodeElement = document.getElementById('qr-code');
+      const qrCodeData = `upi://pay?pa=nitinmanecomp@oksbi&pn=Nitin%20Mane&mc=123456&tid=001&tr=1234567890&tn=Payment%20for%20order&am=${totalAmount}&cu=INR&url=`;
+
+      QRCode.toCanvas(qrCodeElement, qrCodeData, { width: 100, height: 100 }, function (error) {
+        if (error) {
+          console.error('QR Code Generation Error:', error);
+        } else {
+          console.log('QR code generated!');
+        }
+      });
+
+      // Generate PDF function
+      document.getElementById('generate-pdf-btn').addEventListener('click', () => {
+        const element = document.getElementById('pdf-content');
+        const opt = {
+          margin: 0.5,
+          filename: `${customerName}_order-summary.pdf`,
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { scale: 5 },
+          jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+        };
+        html2pdf().from(element).set(opt).save();
+      });
     });
   </script>
 </body>
-
 </html>
